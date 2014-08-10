@@ -1,10 +1,10 @@
 <?php
 
 #Home page
-Route::get('/', function() {
+Route::get('/', array('before'=>'auth', function() {
 	$comments = Comment::all();	
 	return View::make('index')->with('comments', $comments);	
-});
+}));
 
 #GET login
 Route::get('/login', array(
@@ -62,20 +62,20 @@ Route::post('/signup', array('before' => 'csrf', function() {
 }));
 
 #Display add form
-Route::get('/add/', function() {
-	return View::make('add');
-});
+Route::get('/comment/', array('before'=>'auth', function() {
+	return View::make('comment');
+}));
 
 #Process add form
-Route::post('/add/', function() {	
+Route::post('/comment/', array('before'=>'csrf', function() {	
 	$comment = new Comment();
 	$comment->subject = Input::get('subject');
 	$comment->comment = Input::get('comment');
 
 	$comment->save();
 	
-	return "Your comment has been saved.";
-});
+	return Redirect::to('/')->with('flash_message', 'Your comment has been saved!');
+}));
 
 #Debug
 Route::get('/debug', function() {
