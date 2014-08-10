@@ -2,7 +2,7 @@
 
 @section('content')
 	<h1>Log in</h1>
-	<a href='/signup'>New user? You're missing out! Create your account here.</a>
+	<a href='/signup'>New user? You have been missing out! Create your FREE account here.</a>
 	<br><br>
 	{{ Form::open(array('url' => '/login')) }}
 		Email<br>
